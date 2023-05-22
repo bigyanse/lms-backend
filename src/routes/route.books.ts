@@ -79,10 +79,10 @@ router.get("/search", async (req, res) => {
 		const books = await prisma.book.findMany({
 			where: {
 				OR: [
-					{ title: { contains: searchQuery } },
-					{ description: { contains: searchQuery } },
-					{ genre: { contains: searchQuery } },
-					{ author: { contains: searchQuery } },
+					{ title: { contains: searchQuery, mode: 'insensitive' } },
+					{ description: { contains: searchQuery, mode: 'insensitive' } },
+					{ genre: { contains: searchQuery , mode: 'insensitive' } },
+					{ author: { contains: searchQuery , mode: 'insensitive' } },
 				],
 			},
 		});
