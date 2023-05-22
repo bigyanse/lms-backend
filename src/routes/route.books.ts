@@ -73,8 +73,24 @@ router.delete("/book/:id/delete", async (req, res) => {
 	}
 });
 
-router.get("/search", (req, res) => {
-	//
+router.get("/search", async (req, res) => {
+	try {
+		const searchQuery: string = req.query.q as string;
+		const books = await prisma.book.findMany({
+			where: {
+				OR: [
+					{ title: { contains: searchQuery } },
+					{ description: { contains: searchQuery } },
+					{ genre: { contains: searchQuery } },
+					{ author: { contains: searchQuery } },
+				],
+			},
+		});
+
+		return res.json({ success: true, data: { books: books } });
+	} catch(err: any) {
+		return res.json({ success: false, data: "error" });
+	}
 });
 
 export default router;
