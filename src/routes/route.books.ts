@@ -93,4 +93,22 @@ router.get("/search", async (req, res) => {
 	}
 });
 
+router.get("/recommend", async (req, res) => {
+	try {
+		const book = await prisma.book.findUnique({
+			where: {
+				id: req.query.book as string,
+			},
+		});
+		const books = await prisma.book.findMany({
+			where: {
+				genre: book?.genre
+			},
+		});
+		return res.json({ success: true, data: { books: books } });
+	} catch(err: any) {
+		return res.json({ success: false, data: "error" });
+	}
+});
+
 export default router;
