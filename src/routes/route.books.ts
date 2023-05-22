@@ -102,8 +102,8 @@ router.get("/recommend", async (req, res) => {
 		});
 		const books = await prisma.book.findMany({
 			where: {
-				genre: book?.genre,
-				id: { not: book.id },
+				genre: book!.genre,
+				id: { not: book!.id },
 			},
 		});
 		return res.json({ success: true, data: { books: books } });
