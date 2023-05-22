@@ -48,7 +48,7 @@ router.post("/login", async (req, res) => {
 		const isLoginValid = bcrypt.compareSync(password, user.password);
 		if(isLoginValid) {
 			const token = jwt.sign({ email: user.email, admin: user.admin }, secretKey, { expiresIn: '1h' });
-			res.cookie('lmst', token, { httpOnly: true });
+			res.cookie('lmst', token, { httpOnly: true, secure: true });
 			return res.json({ success: true, data: "done" });
 		}
 	}
