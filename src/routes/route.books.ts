@@ -105,6 +105,7 @@ router.get("/recommend", async (req, res) => {
 				genre: book!.genre,
 				id: { not: book!.id },
 			},
+			take: 3,
 		});
 		return res.json({ success: true, data: { books: books } });
 	} catch(err: any) {
